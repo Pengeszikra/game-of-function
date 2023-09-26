@@ -34,6 +34,8 @@ export interface MultipleState {
   flying?: Card;
   debug: string;
   diff?: number;
+  question: string;
+  answer: string;
 }
 
 export const initialMultiState: MultipleState = {
@@ -43,6 +45,8 @@ export const initialMultiState: MultipleState = {
   tower: [],
   focus: "",
   debug: "",
+  question: "",
+  answer: "",
 }
 
 export type MultipleActionsMap =
@@ -71,7 +75,7 @@ export const multiple:Labels<MultipleActionsMap> = {
   SET_PRE_PERCENT: "SET_PRE_PERCENT",
   START_BATTLE: "START_BATTLE",
   FOCUS: "FOCUS",
-  UNDO: "UNDO"
+  UNDO: "UNDO",
 }
 
 export const multipleReducer: Reducer<MultipleState, MultipleActionsMap> = (

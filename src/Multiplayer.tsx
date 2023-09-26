@@ -1,20 +1,9 @@
-import { FC, useEffect, useLayoutEffect } from "react";
+import { FC, useCallback, useEffect, useLayoutEffect } from "react";
 import { useStateFactory } from "react-state-factory";
 
-import { Card, Owner, initialMultiState, multiple, multipleReducer } from "./multipleReducer.ts";
-import { skillList } from "./skillList.ts";
-import { randomPick, createList } from "./arrayUtils.ts";
-
-let watch = 0;
-
-const cardInfo = ({ value, skill }: Partial<Card>) => `[ ${value?.toString().padStart(2, " ")} ] ${skill} `;
-
-const rndCard = (owner: string): Card => ({
-  owner,
-  id: Math.random().toString().slice(-6),
-  skill: randomPick(skillList),
-  value: Math.random() * 18 - 9 | 0
-});
+import { Card, initialMultiState, multiple, multipleReducer } from "./multipleReducer.ts";
+import { createList } from "./arrayUtils.ts";
+import { cardInfo, rndCard } from "./card.ts";
 
 export const MultiPlayer: FC = () => {
 
@@ -33,19 +22,15 @@ export const MultiPlayer: FC = () => {
     );
   }, [put]);
 
+  const handlePlay = useCallback((card: Card) => card && put.PLAY_CARD(card), [put]);
+
   useEffect(() => {
     if (state.order.length < 1 || state.center) return;
     put.FOCUS(state.order[0]);
     handlePlay(state.owners[state.order[0]].hand[0]);
     put.PLAY_RESULT(null);
     put.FOCUS(state.order[1]);
-  }, [state.order, state.center, put, state.owners])
-
-  watch++;
-
-  function handlePlay(card: Card) {
-    card && put.PLAY_CARD(card);
-  }
+  }, [state, put, handlePlay])
 
   function handleResult() {
     put.PLAY_RESULT(null);
@@ -61,7 +46,6 @@ export const MultiPlayer: FC = () => {
           {/* <button type="button" disabled={!!state.flying} className="disabled:bg-green-900 bg-green-400 text-black p-2 rounded w-20 select-none hover:bg-green-200 text-center" onClick={handlePlay}>action</button> */}
           {/* <button type="button" disabled={!state.flying} className="disabled:bg-green-900 bg-green-400 text-black p-2 rounded w-20 select-none hover:bg-green-200 text-center" onClick={handleResult}>consent</button> */}
         </section>
-        <p>-( {watch} )-</p>
         <br />
         <section className="grid grid-cols-4 gap-4 place-items-start">
           <section>
@@ -91,7 +75,7 @@ export const MultiPlayer: FC = () => {
               <p>- hand: </p>{
                 state.owners[ownerId].hand.map(card => (
                   ownerId === state.focus && !state.flying
-                    ? <p><button type="button" className="bg-green-400 hover:bg-green-200 text-black p-1 rounded text-center mb-2" onClick={() => handlePlay(card)}>{cardInfo(card)}</button></p>
+                    ? <p key={card.id}><button type="button" className="bg-green-400 hover:bg-green-200 text-black p-1 rounded text-center mb-2" onClick={() => handlePlay(card)}>{cardInfo(card)}</button></p>
                     : <p key={card.id}>{cardInfo(card)}</p>
                 ))
               }
@@ -114,13 +98,10 @@ export const MultiPlayer: FC = () => {
           {state.order
             .map(ownerId => state.owners[ownerId])
             .sort(({score:a}, {score:b}) => b - a)
-            .map(({name, score}) => <p>{name} : {score}</p>)
+            .map(({name, score}) => <p key={name}>{name} : {score}</p>)
           }
         </section>
       </pre>
-      <code className="w-3/4">
-        {false && JSON.stringify(state)}
-      </code>
     </main>
   )
 }
