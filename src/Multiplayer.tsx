@@ -1,13 +1,17 @@
 import { FC, useCallback, useEffect, useLayoutEffect } from "react";
 import { useStateFactory } from "react-state-factory";
+// import { useSagaFactory } from "react-state-factory";
 
 import { Card, initialMultiState, multiple, multipleReducer } from "./multipleReducer.ts";
+// import { MultipleActionsMap, MultipleState } from "./multipleReducer.ts";
 import { createList } from "./arrayUtils.ts";
 import { cardInfo, rndCard } from "./card.ts";
+// import { mainSaga } from "./masterSaga.ts";
 
 export const MultiPlayer: FC = () => {
 
   const [state, put] = useStateFactory(multipleReducer, initialMultiState, multiple);
+  // const [state, put] = useSagaFactory(multipleReducer, initialMultiState, multiple, mainSaga);
 
   useLayoutEffect(() => {
     put.RESET(Date.now());
@@ -25,9 +29,10 @@ export const MultiPlayer: FC = () => {
   const handlePlay = useCallback((card: Card) => card && put.PLAY_CARD(card), [put]);
 
   useEffect(() => {
-    if (state.order.length < 1 || state.center) return;
-    put.FOCUS(state.order[0]);
-    handlePlay(state.owners[state.order[0]].hand[0]);
+    if (state.order.length < 2 || state.center) return;
+    const [starerId] = state.order;
+    put.FOCUS(starerId);
+    handlePlay(state.owners[starerId].hand[0]);
     put.PLAY_RESULT(null);
     put.FOCUS(state.order[1]);
   }, [state, put, handlePlay])
