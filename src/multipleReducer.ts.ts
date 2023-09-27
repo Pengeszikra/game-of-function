@@ -75,7 +75,7 @@ export const multiple:Labels<MultipleActionsMap> = {
   SET_PRE_PERCENT: "SET_PRE_PERCENT",
   START_BATTLE: "START_BATTLE",
   FOCUS: "FOCUS",
-  UNDO: "UNDO",
+  UNDO: "UNDO"
 }
 
 export const multipleReducer: Reducer<MultipleState, MultipleActionsMap> = (

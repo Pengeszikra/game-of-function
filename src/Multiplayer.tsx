@@ -1,56 +1,22 @@
-import { FC, useCallback, useEffect, useLayoutEffect } from "react";
-import { useStateFactory } from "react-state-factory";
-// import { useSagaFactory } from "react-state-factory";
+import { FC, useCallback } from "react";
+import { useSagaFactory } from "react-state-factory";
 
 import { Card, initialMultiState, multiple, multipleReducer } from "./multipleReducer.ts";
-// import { MultipleActionsMap, MultipleState } from "./multipleReducer.ts";
-import { createList } from "./arrayUtils.ts";
-import { cardInfo, rndCard } from "./card.ts";
-// import { mainSaga } from "./masterSaga.ts";
+import { cardInfo } from "./card.ts";
+import { mainSaga } from "./masterSaga.ts";
 
 export const MultiPlayer: FC = () => {
 
-  const [state, put] = useStateFactory(multipleReducer, initialMultiState, multiple);
-  // const [state, put] = useSagaFactory(multipleReducer, initialMultiState, multiple, mainSaga);
-
-  useLayoutEffect(() => {
-    put.RESET(Date.now());
-    ["A-bot", "B-bot", "C-bot", "D-bot"].map(bot =>
-      put.SIT_DOWN({
-        id: bot,
-        name: bot,
-        score: 0,
-        hand: createList(3, () => rndCard(bot)),
-        deck: createList(5, () => rndCard(bot)),
-      })
-    );
-  }, [put]);
+  const [state, put] = useSagaFactory(multipleReducer, initialMultiState, multiple, mainSaga);
 
   const handlePlay = useCallback((card: Card) => card && put.PLAY_CARD(card), [put]);
-
-  useEffect(() => {
-    if (state.order.length < 2 || state.center) return;
-    const [starerId] = state.order;
-    put.FOCUS(starerId);
-    handlePlay(state.owners[starerId].hand[0]);
-    put.PLAY_RESULT(null);
-    put.FOCUS(state.order[1]);
-  }, [state, put, handlePlay])
-
-  function handleResult() {
-    put.PLAY_RESULT(null);
-  }
-
-  const handleUndo = (card:Card) => () => put.UNDO(card);
+  const handleResult = useCallback(() => put.PLAY_RESULT(null), [put]); 
+  const handleUndo = useCallback((card:Card) => () => put.UNDO(card), [put]);
 
   return (
     <main className="bg-black min-h-screen grid place-items-center relative text-green-300">
       <pre className="w-3/4 overflow-hidden">
         <p>The react-state-factory works as expected</p>
-        <section className="grid grid-flow-col gap-2 my-2 justify-start">
-          {/* <button type="button" disabled={!!state.flying} className="disabled:bg-green-900 bg-green-400 text-black p-2 rounded w-20 select-none hover:bg-green-200 text-center" onClick={handlePlay}>action</button> */}
-          {/* <button type="button" disabled={!state.flying} className="disabled:bg-green-900 bg-green-400 text-black p-2 rounded w-20 select-none hover:bg-green-200 text-center" onClick={handleResult}>consent</button> */}
-        </section>
         <br />
         <section className="grid grid-cols-4 gap-4 place-items-start">
           <section>
