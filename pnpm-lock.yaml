@@ -15,8 +15,8 @@ dependencies:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
   react-state-factory:
-    specifier: file:~/repo/-module-/react-state-factory-0.0.84.tgz
-    version: file:../-module-/react-state-factory-0.0.84.tgz(react@18.2.0)(redux-saga@1.2.3)(use-saga-reducer@3.0.0)
+    specifier: ^0.0.9
+    version: 0.0.9(react@18.2.0)(redux-saga@1.2.3)(use-saga-reducer@3.0.0)
 
 devDependencies:
   '@types/react':
@@ -1705,6 +1705,18 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-state-factory@0.0.9(react@18.2.0)(redux-saga@1.2.3)(use-saga-reducer@3.0.0):
+    resolution: {integrity: sha512-no/yt/mO59cAnDtg02Tdz/dH4ZCOQHVWIrT4R085UsBqd828m/Be19OlM3evPicAjh0gwg1jsfDLG/vuCo5LZg==}
+    peerDependencies:
+      react: '>=16.0.0 <19.0.0'
+      redux-saga: ^1.2.3
+      use-saga-reducer: ^3.0.0
+    dependencies:
+      react: 18.2.0
+      redux-saga: 1.2.3
+      use-saga-reducer: 3.0.0(react@18.2.0)(redux-saga@1.2.3)
+    dev: false
+
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
@@ -2048,18 +2060,3 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
-
-  file:../-module-/react-state-factory-0.0.84.tgz(react@18.2.0)(redux-saga@1.2.3)(use-saga-reducer@3.0.0):
-    resolution: {integrity: sha512-cEd0bUPpNTzDK+6AAa6OT8lmKJF2oJRTijQ4ffAGK78dLpIwC5I3TsWXFVwUA+Ukqdt2F+Y1uOIJhqTCNaEwDA==, tarball: file:../-module-/react-state-factory-0.0.84.tgz}
-    id: file:../-module-/react-state-factory-0.0.84.tgz
-    name: react-state-factory
-    version: 0.0.84
-    peerDependencies:
-      react: '>=16.0.0 <19.0.0'
-      redux-saga: ^1.2.3
-      use-saga-reducer: ^3.0.0
-    dependencies:
-      react: 18.2.0
-      redux-saga: 1.2.3
-      use-saga-reducer: 3.0.0(react@18.2.0)(redux-saga@1.2.3)
-    dev: false
