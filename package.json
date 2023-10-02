@@ -10,10 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bard-ai-google": "^1.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-state-factory": "^0.0.9"
+    "react-state-factory": "file:~/repo/-module-/react-state-factory-0.1.12.tgz"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
