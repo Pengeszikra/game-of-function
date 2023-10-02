@@ -1,6 +1,5 @@
 import { FC, useCallback } from "react";
 import { useSagaFactory } from "react-state-factory";
-import { Saga } from "redux-saga";
 
 import { Card, initialMultiState, multiple, multipleReducer } from "./multipleReducer.ts";
 import { cardInfo } from "./card.ts";
@@ -8,7 +7,7 @@ import { mainSaga } from "./masterSaga.ts";
 
 export const MultiPlayer: FC = () => {
 
-  const [state, put] = useSagaFactory(multipleReducer, initialMultiState, multiple, mainSaga as Saga);
+  const [state, put] = useSagaFactory(multipleReducer, initialMultiState, multiple, mainSaga);
 
   const handlePlay = useCallback((card: Card) => card && put.PLAY_CARD(card), [put]);
   const handleResult = useCallback(() => put.PLAY_RESULT(null), [put]); 
