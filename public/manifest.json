@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "game-of-function",
+  "short_name": "functions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#001122",
+  "description": "A react-state-factory test app",
+  "icons": [
+    {
+      "src": "/logo-v2.png",
+      "type": "image/png",
+      "sizes": "1024x1024",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#001122"
+}
